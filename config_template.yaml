@@ -1,0 +1,71 @@
+# Spark4 Training Configuration Template
+# Anpassen für eigene Trainings
+
+# Projekt Informationen
+project:
+  name: "spark4_training"
+  version: "4.0.0"
+  description: "Template für Spark4 Training"
+
+# Daten Konfiguration
+data:
+  input_file: "data_warehouse/raw/input.jsonl"
+  output_dir: "data_warehouse/splits"
+
+  # Split Einstellungen
+  split:
+    train_ratio: 0.8
+    validation_ratio: 0.2
+    seed: 42
+    shuffle: true
+
+# Modell Konfiguration
+model:
+  name: "gpt2"  # Beispiel: gpt2, gpt2-medium, etc.
+  type: "causal_lm"
+
+  # Modell Parameter
+  config:
+    max_length: 512
+    use_cache: false
+
+# Training Konfiguration
+training:
+  # Output
+  output_dir: "model_registry/checkpoints"
+  logging_dir: "outputs/logs"
+
+  # Hyperparameter
+  num_epochs: 3
+  batch_size: 4
+  gradient_accumulation_steps: 4
+  learning_rate: 5.0e-5
+  weight_decay: 0.01
+  warmup_steps: 100
+
+  # Speichern
+  save_strategy: "epoch"
+  save_total_limit: 3
+
+  # Evaluation
+  eval_strategy: "epoch"
+  eval_steps: 500
+
+  # Logging
+  logging_steps: 10
+  report_to: "none"  # none, tensorboard, wandb
+
+  # Seeds
+  seed: 42
+
+# Hardware Konfiguration
+hardware:
+  device: "cuda"  # cuda, cpu
+  fp16: true  # Mixed Precision Training
+  dataloader_num_workers: 4
+
+# Zusätzliche Einstellungen
+advanced:
+  gradient_checkpointing: false
+  early_stopping_patience: null  # null = disabled
+  max_grad_norm: 1.0

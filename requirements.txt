@@ -1,0 +1,13 @@
+# Spark4 Dependencies
+# Minimal und sauber gehalten
+
+# Core
+pyyaml>=6.0.1
+
+# ML Framework (für gpu_check.py)
+torch>=2.0.0
+
+# Optional: Für zukünftige Features
+# transformers>=4.30.0
+# accelerate>=0.20.0
+# datasets>=2.12.0

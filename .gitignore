@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Jupyter
+.ipynb_checkpoints
+*.ipynb
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Spark4 spezifisch
+outputs/
+model_registry/checkpoints/
+*.log
+
+# Daten (außer Templates)
+data_warehouse/*
+!data_warehouse/.gitkeep
+
+# Configs (außer Template)
+*.yaml
+!config_template.yaml
+
+# Modelle und Weights
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.ckpt
