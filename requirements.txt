@@ -1,0 +1,16 @@
+# Core dependencies with exact versions
+# unsloth for efficient fine-tuning
+unsloth==2024.11.7
+
+# transformers - pinned to 4.51.0 (avoiding 4.52+)
+transformers==4.51.0
+
+# trl - compatible with transformers 4.51.0
+trl==0.11.4
+
+# Required dependencies
+torch>=2.1.0
+datasets>=2.14.0
+accelerate>=0.25.0
+peft>=0.7.0
+bitsandbytes>=0.41.0
