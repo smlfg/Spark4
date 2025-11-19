@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+  unsloth-trainer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: spark4-unsloth:latest
+    container_name: spark4-unsloth-trainer
+
+    # GPU configuration
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+    # Environment variables
+    environment:
+      - PYTHONUNBUFFERED=1
+      - CUDA_VISIBLE_DEVICES=0
+      - HF_HOME=/app/.cache/huggingface
+      - TRANSFORMERS_CACHE=/app/.cache/huggingface/transformers
+      - HF_DATASETS_CACHE=/app/.cache/huggingface/datasets
+      # Uncomment and set your API keys
+      # - WANDB_API_KEY=${WANDB_API_KEY}
+      # - HF_TOKEN=${HF_TOKEN}
+
+    # Volume mounts
+    volumes:
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./scripts:/app/scripts
+      - ./outputs:/app/outputs
+      - ./checkpoints:/app/checkpoints
+      - huggingface-cache:/app/.cache/huggingface
+
+    # Working directory
+    working_dir: /app
+
+    # Keep container running
+    stdin_open: true
+    tty: true
+
+    # Restart policy
+    restart: unless-stopped
+
+    # Health check
+    healthcheck:
+      test: ["CMD", "python", "-c", "import torch; assert torch.cuda.is_available()"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+    # Resource limits (adjust based on your system)
+    shm_size: '16gb'
+
+    # Network
+    networks:
+      - spark4-network
+
+  # Optional: TensorBoard for monitoring
+  tensorboard:
+    image: tensorflow/tensorflow:latest
+    container_name: spark4-tensorboard
+    ports:
+      - "6006:6006"
+    volumes:
+      - ./outputs:/outputs
+    command: tensorboard --logdir /outputs --host 0.0.0.0
+    networks:
+      - spark4-network
+    profiles:
+      - monitoring
+
+networks:
+  spark4-network:
+    driver: bridge
+
+volumes:
+  huggingface-cache:
+    driver: local

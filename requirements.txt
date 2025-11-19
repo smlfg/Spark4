@@ -1,0 +1,56 @@
+# Production Requirements for Spark4 Unsloth Training Environment
+# All versions are pinned for reproducibility
+# Compatible with Python 3.10, CUDA 12.3, PyTorch 2.2.0
+
+# Core dependencies
+pip==24.0
+setuptools==69.5.1
+wheel==0.43.0
+packaging==24.0
+ninja==1.11.1.1
+
+# PyTorch ecosystem (comes with NVIDIA base image, listed for reference)
+torch==2.2.0
+torchvision==0.17.0
+torchaudio==2.2.0
+
+# Flash Attention (pre-compiled in Docker)
+flash-attn==2.5.9.post1
+
+# Transformers and related
+transformers==4.45.2
+tokenizers==0.20.3
+accelerate==0.33.0
+peft==0.13.2
+bitsandbytes==0.44.1
+
+# Training frameworks
+trl==0.11.4
+datasets==2.20.0
+
+# Unsloth (install from git for latest features)
+# unsloth @ git+https://github.com/unslothai/unsloth.git@4e11ceb3b0eb486764c2f5f47c8eb48e7ce0c8e1
+
+# Tokenization
+sentencepiece==0.2.0
+protobuf==5.27.2
+
+# Experiment tracking and visualization
+wandb==0.18.7
+tensorboard==2.16.2
+
+# Scientific computing
+numpy==1.26.4
+scipy==1.14.1
+scikit-learn==1.5.1
+pandas==2.2.2
+matplotlib==3.9.2
+
+# Utilities
+tqdm==4.66.5
+huggingface-hub==0.25.2
+
+# Notes:
+# - This file is for reference. Use the Dockerfile for production deployments.
+# - Flash Attention requires compilation and specific CUDA version.
+# - Unsloth installation may require additional flags depending on your setup.
